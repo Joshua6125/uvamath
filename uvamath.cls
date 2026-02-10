@@ -8,11 +8,13 @@
 \def\supervisortextsingular{Supervisor}
 \def\supervisortextplural{Supervisors}
 \def\titletext{Title}
-\def\authortextsingular{Authors}
+\def\authortextsingular{Author}
 \def\authortextplural{Authors}
 \def\datetext{End date}
+\def\examinertextsingular{Examiner}
+\def\examinertextplural{Examiners}
 \def\secondgradertextsingular{Second grader}
-\def\secondgradertextplural{Second grader}
+\def\secondgradertextplural{Second graders}
 \def\thesistext{Bachelor thesis Mathematics}
 \def\thesisWNtext{Bachelor thesis Mathematics and Physics \& Astronomy}
 \def\thesisWItext{Bachelor thesis Mathematics and Computer Science}
@@ -32,6 +34,8 @@
 \def\authortextsingular{Auteur}
 \def\authortextplural{Auteurs}
 \def\datetext{Einddatum}
+\def\examinertextsingular{Examinator}
+\def\examinertextplural{Examinators}
 \def\secondgradertextsingular{Tweede beoordelaar}
 \def\secondgradertextplural{Tweede beoordelaars}
 \def\thesistext{Bachelorscriptie Wiskunde}
@@ -51,6 +55,7 @@
 \def\instituteaddress#1{\gdef\@instituteaddress{#1}}
 \def\coverimage#1{\gdef\@coverimage{#1}}
 \def\supervisors#1{\gdef\@supervisors{#1}}
+\def\examiner#1{\gdef\@examiners{#1}}
 \def\secondgrader#1{\gdef\@secondgrader{#1}}
 
 % Options for various projects
@@ -63,7 +68,7 @@
     \uvatext\\\bigskip
     \includegraphics[width=0.070\hsize]{uvalogo}
     }
-    
+
     \instituteaddress{\kdvitext\\
     \uvatext\\
     Science Park 904, 1098 XH Amsterdam\\
@@ -79,7 +84,7 @@
     \uvatext\\\bigskip
     \includegraphics[width=0.070\hsize]{uvalogo}
     }
-    
+
     \instituteaddress{\kdvitext\\
     \uvatext\\
     Science Park 904, 1098 XH Amsterdam\\
@@ -95,7 +100,7 @@
     \uvatext\\\bigskip
     \includegraphics[width=0.070\hsize]{uvalogo}
     }
-    
+
     \instituteaddress{\kdvitext\\
     \uvatext\\
     Science Park 904, 1098 XH Amsterdam\\
@@ -112,7 +117,7 @@
     \uvatext\\\bigskip
     \includegraphics[width=0.070\hsize]{uvalogo}
     }
-    
+
     \instituteaddress{\ioptext\\
     \uvatext\\
     Science Park 904, 1098 XH Amsterdam\\
@@ -133,7 +138,7 @@
     \uvatext\\\bigskip
     \includegraphics[width=0.070\hsize]{uvalogo}
     }
-    
+
     \instituteaddress{\ivitext\\
     \uvatext\\
     Science Park 904, 1098 XH Amsterdam\\
@@ -142,7 +147,7 @@
     \uvatext\\
     Science Park 904, 1098 XH Amsterdam\\
     \url{http://www.kdvi.uva.nl}{}
-    }   
+    }
 }
 
 %\DeclareOption*{}
@@ -154,6 +159,7 @@
 % Default values for variable text
 \coverimage{}
 \supervisors{\relax}
+\examiner{\relax}
 \secondgrader{\relax}
 
 
@@ -185,6 +191,21 @@
         \addtocounter{supervisornum}{1}
         \gdef\@supervisors{#2}
         \gdef\@supervisordetails{#2, #1}
+    \fi
+}
+
+\newcounter{examinernum}
+\def\@examinerdetails{}
+\def\@examiner{}
+\renewcommand\examiner[2][\relax]{
+    \ifnum\value{examinernum}>0\relax
+        \addtocounter{examinernum}{1}
+        \xdef\@examiner{\@examiner, #2}
+        \protected@xdef\@examinerdetails{\@examinerdetails #2\if#1\relax\else{, #1}\fi}
+    \else
+        \addtocounter{examinernum}{1}
+        \gdef\@examiner{#2}
+        \gdef\@examinerdetails{#2, #1}
     \fi
 }
 
@@ -245,6 +266,13 @@
 \else
 \supervisortextplural: \@supervisordetails\\
 \fi
+%
+\if\@examiner\relax\else
+\ifnum\value{examinernum} < 2%
+\examinertextsingular: \@examinerdetails\\
+\else
+\examinertextplural: \@examinerdetails\\
+\fi \fi
 %
 \if\@secondgrader\relax\else
 \ifnum\value{secondgradernum} < 2%
