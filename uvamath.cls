@@ -162,7 +162,6 @@
 \examiner{\relax}
 \secondgrader{\relax}
 
-
 % Author command
 \newcounter{authors}
 \def\@authordetails{}
@@ -179,51 +178,50 @@
     \fi
 }
 
+% Supervisor command
 \newcounter{supervisornum}
 \def\@supervisordetails{}
 \def\@supervisors{}
 \renewcommand\supervisors[2][\relax]{
-    \ifnum\value{supervisornum}>0\relax
-        \addtocounter{supervisornum}{1}
-        \xdef\@supervisors{\@supervisors, #2}
-        \protected@xdef\@supervisordetails{\@supervisordetails #2\if#1\relax\else{, #1}\fi}
-    \else
-        \addtocounter{supervisornum}{1}
-        \gdef\@supervisors{#2}
-        \gdef\@supervisordetails{#2, #1}
-    \fi
+  \stepcounter{supervisornum}
+  \ifnum\value{supervisornum}=1
+    \gdef\@supervisors{#2}
+    \gdef\@supervisordetails{#2\ifx#1\relax\else, #1\fi}
+  \else
+    \g@addto@macro\@supervisors{, #2}
+    \g@addto@macro\@supervisordetails{, #2\ifx#1\relax\else, #1\fi}
+  \fi
 }
 
+% Examiner command
 \newcounter{examinernum}
 \def\@examinerdetails{}
 \def\@examiner{}
 \renewcommand\examiner[2][\relax]{
-    \ifnum\value{examinernum}>0\relax
-        \addtocounter{examinernum}{1}
-        \xdef\@examiner{\@examiner, #2}
-        \protected@xdef\@examinerdetails{\@examinerdetails #2\if#1\relax\else{, #1}\fi}
-    \else
-        \addtocounter{examinernum}{1}
-        \gdef\@examiner{#2}
-        \gdef\@examinerdetails{#2, #1}
-    \fi
+  \stepcounter{examinernum}
+  \ifnum\value{examinernum}=1
+    \gdef\@examiner{#2}
+    \gdef\@examinerdetails{#2\ifx#1\relax\else, #1\fi}
+  \else
+    \g@addto@macro\@examiner{, #2}
+    \g@addto@macro\@examinerdetails{, #2\ifx#1\relax\else, #1\fi}
+  \fi
 }
 
+% Second grader command
 \newcounter{secondgradernum}
 \def\@secondgraderdetails{}
 \def\@secondgrader{}
 \renewcommand\secondgrader[2][\relax]{
-    \ifnum\value{secondgradernum}>0\relax
-        \addtocounter{secondgradernum}{1}
-        \xdef\@secondgraders{\@secondgrader, #2}
-        \protected@xdef\@secondgraderdetails{\@secondgraderdetails #2\if#1\relax\else{, #1}\fi}
-    \else
-        \addtocounter{secondgradernum}{1}
-        \gdef\@secondgrader{#2}
-        \gdef\@secondgraderdetails{#2, #1}
-    \fi
+  \stepcounter{secondgradernum}
+  \ifnum\value{secondgradernum}=1
+    \gdef\@secondgrader{#2}
+    \gdef\@secondgraderdetails{#2\ifx#1\relax\else, #1\fi}
+  \else
+    \g@addto@macro\@secondgrader{, #2}
+    \g@addto@macro\@secondgraderdetails{, #2\ifx#1\relax\else, #1\fi}
+  \fi
 }
-
 
 
 % Maketitle command
