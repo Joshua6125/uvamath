@@ -234,7 +234,14 @@
 \par}\bigskip
 {\Large \@date\par}\bigskip\bigskip
 {\large \whichprojecttext\par}\medskip
-\if\@supervisors\relax\else {\large\supervisortextsingular: \@supervisors\par}\bigskip\fi
+\if\@supervisors\relax
+\else
+  \ifnum\value{supervisornum}=1
+    {\large\supervisortextsingular: \@supervisors\par}\bigskip
+  \else
+    {\large\supervisortextplural: \@supervisors\par}\bigskip
+  \fi
+\fi
 \vspace{\stretch{1}}
 \@coverimage
 \vspace{\stretch{1}}
